@@ -1,14 +1,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SubscriptionApp.API.Data;
 
 namespace SubscriptionApp.API.Controllers
 {
+    [Authorize]
+    //Authorize requests to the controller. Works only after login
     [Route("api/[controller]")]
+    //Forces attribute routing and automatically validates request
     [ApiController]
+    //inherits from controller base which gives access to HTTP responses which is what is
+    //used by IActionResult in the controller actions.
+    //When inherited from Controller instead of ControllerBase, then the base will be an
+    //an MVC controller with view support unliker Controller which has no view support which is what
+    //is needed when out UI is in Angular
     public class ValuesController : ControllerBase
     {
         private readonly DataContext _context;
@@ -17,6 +26,7 @@ namespace SubscriptionApp.API.Controllers
             _context = context;
 
         }
+
         // GET api/values
         [HttpGet]
         public async Task<IActionResult> GetValues()
@@ -27,6 +37,7 @@ namespace SubscriptionApp.API.Controllers
         }
 
         // GET api/values/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValue(int id)
         {
@@ -34,7 +45,7 @@ namespace SubscriptionApp.API.Controllers
             return Ok(value);
         }
 
-        // POST api/values
+        // POST api/values        
         [HttpPost]
         public void Post([FromBody] string value)
         {
