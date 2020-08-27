@@ -11,7 +11,8 @@ namespace SubscriptionApp.API.Controllers
     [Authorize]
     //Authorize requests to the controller. Works only after login
     [Route("api/[controller]")]
-    //Forces attribute routing and automatically validates request
+    //Forces attribute routing and automatically validates request. The routing is done to the
+    //based on the name of the controller /api/Values in this case as this is ValuesController
     [ApiController]
     //inherits from controller base which gives access to HTTP responses which is what is
     //used by IActionResult in the controller actions.

@@ -23,7 +23,7 @@ namespace SubscriptionApp.API.Data
             
             //Then check if the password being sent for login matches the stored password hash
             if(!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-                return null;
+                return null;            
             
             return user;
         }

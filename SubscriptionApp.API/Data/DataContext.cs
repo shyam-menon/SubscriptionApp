@@ -10,6 +10,7 @@ namespace SubscriptionApp.API.Data
             //The properties here decides the name of the tables that will be created
             public DbSet<Value> Values { get; set; }
             public DbSet<User> Users { get; set; }
+            public DbSet<Subscription> Subscriptions { get; set; }
         
     }
 }

@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using SubscriptionApp.API.Data;
 using SubscriptionApp.API.Helpers;
+using SubscriptionApp.API.Services;
 
 namespace SubscriptionApp.API
 {
@@ -30,7 +32,12 @@ namespace SubscriptionApp.API
             services.AddDbContext<DataContext>(x => x.UseSqlite
             (Configuration.GetConnectionString("DefaultConnection")));
             //.NET Core 3.0 took out the AddMVC() to strip away part not needed for Web API 
-            services.AddControllers();
+            //Add Newtonsoft JSON instead of System.Text.JSON as part of .Net core 3
+            services.AddControllers().AddNewtonsoftJson(opt => 
+            {
+                opt.SerializerSettings.ReferenceLoopHandling =
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             //Add the CORS service to prevent exception in client as browser tries to prevent web page  
             //from making ajax requests to another domain.This restriction is called the same-origin 
             //policy and prevents a malicious site from reading sensitive data from another site.
@@ -38,7 +45,17 @@ namespace SubscriptionApp.API
             
             //Add the Auth repository as scoped (once per request) instead of singleton or transient
             //It will now be available in the controllers
-            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();            
+            
+            //Add the subscription repository
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+
+            //Add the subscription price service
+            services.AddScoped<ISubscriptionService, SubscriptionService>();
+
+            //Add automapper. To get over ambiguous reference, point it to an assembly that
+            //the specified type
+            services.AddAutoMapper(typeof(SubscriptionRepository).Assembly);
 
             //Add authentication as a service and which type of authentication
             //The security key in appsettings.JSON will be used as the key to validate the token
