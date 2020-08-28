@@ -1,0 +1,8 @@
+Async programming in C#
+
+Use of async/await in for loops
+https://medium.com/@t.masonbarneydev/iterating-asynchronously-how-to-use-async-await-with-foreach-in-c-d7e6d21f89fa
+
+
+IHttpActionResult vs HTTPResponseMessage
+http://www.geeksblood.com/ihttpactionresult-vs-httpresponsemessage/
