@@ -8,7 +8,7 @@ namespace SubscriptionApp.API.Models.PseudoSkus
     // and includes a PseudoSkuSize, PseudoSkuFunction etc as well as a reference to its
     //PseudoSkuTitle and some helper methods to quickly obtain access to the other attributes.
     public class PseudoSku : EntityBase<int>, IAggregateRoot
-    {        
+    {       
 
         public virtual PseudoSkuTitle Title { get; set; }
 

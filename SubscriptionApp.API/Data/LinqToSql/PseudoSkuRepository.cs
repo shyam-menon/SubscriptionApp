@@ -4,7 +4,7 @@ using SubscriptionApp.API.Models.PseudoSkus;
 
 namespace SubscriptionApp.API.Data.LinqToSql
 {
-    public class PseudoSkuRepository: Repository<PseudoSku, int>,
+    public class PseudoSkuRepository: RepositoryLToS<PseudoSku, int>,
                                                            IPseudoSkuRepository
     {
         public PseudoSkuRepository(IUnitOfWork uow)

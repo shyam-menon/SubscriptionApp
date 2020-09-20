@@ -7,11 +7,11 @@ using SubscriptionApp.API.Infrastructure.UnitOfWork;
 
 namespace SubscriptionApp.API.Data.LinqToSql
 {
-    public abstract class Repository<T, TEntityKey> where T : IAggregateRoot
+    public abstract class RepositoryLToS<T, TEntityKey> where T : IAggregateRoot
     {
         private IUnitOfWork _uow;
 
-        public Repository(IUnitOfWork uow)
+        public RepositoryLToS(IUnitOfWork uow)
         {
             _uow = uow;
         }
