@@ -15,6 +15,7 @@ using SubscriptionApp.API.Data;
 using SubscriptionApp.API.Data.LinqToDto;
 using SubscriptionApp.API.Data.LinqToSql;
 using SubscriptionApp.API.Helpers;
+using SubscriptionApp.API.Infrastructure.UnitOfWork;
 using SubscriptionApp.API.Models.Categories;
 using SubscriptionApp.API.Models.PseudoSkus;
 using SubscriptionApp.API.Services;
@@ -83,6 +84,9 @@ namespace SubscriptionApp.API
             //Add the services
             services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.AddScoped<IPseudoSkuCatalogService, PseudoSkuCatalogService>();
+
+            //Unit of work
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //Add automapper. To get over ambiguous reference, point it to an assembly that
             //the specified type
