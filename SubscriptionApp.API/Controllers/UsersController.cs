@@ -14,15 +14,13 @@ namespace SubscriptionApp.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ISubscriptionRepository _repo;
+        private readonly ICommonRepository _repo;
         private readonly IMapper _mapper;
-        private readonly ISubscriptionService _subscriptionService;
-        public UsersController(ISubscriptionRepository repo, IMapper mapper, ISubscriptionService subscriptionService)
-        {
-            _subscriptionService = subscriptionService;
+
+        public UsersController(ICommonRepository repo, IMapper mapper)
+        {           
             _mapper = mapper;
             _repo = repo;
-
         }
 
         [HttpGet]

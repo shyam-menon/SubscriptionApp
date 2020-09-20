@@ -12,8 +12,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using SubscriptionApp.API.Data;
+using SubscriptionApp.API.Data.LinqToDto;
+using SubscriptionApp.API.Data.LinqToSql;
 using SubscriptionApp.API.Helpers;
+using SubscriptionApp.API.Models.Categories;
+using SubscriptionApp.API.Models.PseudoSkus;
 using SubscriptionApp.API.Services;
+using SubscriptionApp.API.Services.Implementations;
+using SubscriptionApp.API.Services.Interfaces.PseudoSkuCatalogService;
 
 namespace SubscriptionApp.API
 {
@@ -25,6 +31,26 @@ namespace SubscriptionApp.API
         }
 
         public IConfiguration Configuration { get; }
+
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            services.AddDbContext<DataContext>(x => {
+                x.UseLazyLoadingProxies();
+                x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            ConfigureServices(services);
+        }
+
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+             services.AddDbContext<DataContext>(x => {
+                x.UseLazyLoadingProxies();
+                x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            ConfigureServices(services);
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -47,15 +73,20 @@ namespace SubscriptionApp.API
             //It will now be available in the controllers
             services.AddScoped<IAuthRepository, AuthRepository>();            
             
-            //Add the subscription repository
-            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            //Add the repositories
+            services.AddScoped<ICommonRepository, CommonRepository>();
+            services.AddScoped<IPseudoSkuTitleRepository,PseudoSkuTitleRepository>();
+            services.AddScoped<IPseudoSkuRepository,PseudoSkuRepository>();
+            services.AddScoped<ICategoryRepository,CategoryRepository>();
 
-            //Add the subscription price service
+
+            //Add the services
             services.AddScoped<ISubscriptionService, SubscriptionService>();
+            services.AddScoped<IPseudoSkuCatalogService, PseudoSkuCatalogService>();
 
             //Add automapper. To get over ambiguous reference, point it to an assembly that
             //the specified type
-            services.AddAutoMapper(typeof(SubscriptionRepository).Assembly);
+            services.AddAutoMapper(typeof(CommonRepository).Assembly);
 
             //Add authentication as a service and which type of authentication
             //The security key in appsettings.JSON will be used as the key to validate the token

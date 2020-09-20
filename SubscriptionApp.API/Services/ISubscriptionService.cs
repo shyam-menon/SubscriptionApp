@@ -1,4 +1,4 @@
-using SubscriptionApp.API.Models;
+using SubscriptionApp.API.Models.Subscriptions;
 
 namespace SubscriptionApp.API.Services
 {

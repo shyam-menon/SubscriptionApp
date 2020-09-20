@@ -11,12 +11,7 @@ namespace SubscriptionApp.API.Helpers
             response.Headers.Add("Access-Control-Expose-Headers", "Application-Error");
             response.Headers.Add("Access-Control-Allow-Origin", "*");
         }
-
-        //Sample extension method on decimal
-        public static decimal AddOne(this decimal price)
-        {
-            return price++;
-        }
+       
         
     }
 }
