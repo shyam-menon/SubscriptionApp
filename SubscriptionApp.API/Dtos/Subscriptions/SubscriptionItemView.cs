@@ -2,7 +2,8 @@ namespace SubscriptionApp.API.Dtos.Subscriptions
 {
     public class SubscriptionItemView
     {
-         public int Id { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
         public int PseudoSkuId { get; set; }
         public string PseudoSkuName { get; set; }
         public string PseudoSkuSizeName { get; set; }

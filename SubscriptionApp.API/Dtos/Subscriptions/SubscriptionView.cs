@@ -9,9 +9,10 @@ namespace SubscriptionApp.API.Dtos.Subscriptions
             Items = new List<SubscriptionItemView>();
         }
         public int Id { get; set; }
+        public string Name { get; set; }
         public string ItemsTotal { get; set; }
         public int NumberOfItems { get; set; }
-        public IEnumerable<SubscriptionItemView> Items { get; set; }
+        public ICollection<SubscriptionItemView> Items { get; set; }
         public string SubscriptionTotal { get; set; }
         
     }    

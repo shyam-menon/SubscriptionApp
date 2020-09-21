@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SubscriptionApp.API.Models.Subscriptions;
 
 namespace SubscriptionApp.API.Data
@@ -27,8 +28,8 @@ namespace SubscriptionApp.API.Data
 
         public async Task<Subscription> FindBy(int id)
         {
-            var subscription = await _context.Subscriptions.FindAsync(id);
-            return subscription;
+            var subscription = await _context.Subscriptions.Include(s => s.SubscriptionItems).ToListAsync();
+            return subscription.Find(s => s.Id == id);
         }
     }
 }

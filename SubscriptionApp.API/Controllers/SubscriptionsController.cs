@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,17 @@ namespace SubscriptionApp.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSubscriptions(int id)
         {
+            //compare id of the path to the users id that is being passed with the token
+            if(id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+            
             var subscription = await _subscriptionservice
                                 .GetSubscription(
                                     new GetSubscriptionRequest{SubscriptionId = id});
+
+            if(subscription == null)
+                return NotFound();
+
 
             return Ok(subscription);
         }

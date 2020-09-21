@@ -1,3 +1,4 @@
+using System.Linq;
 using AutoMapper;
 using SubscriptionApp.API.Dtos;
 using SubscriptionApp.API.Dtos.Categories;
@@ -33,6 +34,8 @@ namespace SubscriptionApp.API.Helpers
             //Subscription
             CreateMap<SubscriptionItem, SubscriptionItemView>();
             CreateMap<Subscription, SubscriptionView>();
+            //     .ForMember( dest => dest.Items.FirstOrDefault(), opt => 
+            //   opt.MapFrom (src => src.SubscriptionItems.FirstOrDefault()));                   
 
             // IProductAttribute
             CreateMap<IPseudoSkuAttribute, Refinement>();           

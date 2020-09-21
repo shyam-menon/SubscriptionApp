@@ -9,6 +9,7 @@ namespace SubscriptionApp.API.Models.Subscriptions
 {
     public class Subscription : EntityBase<int>, IAggregateRoot
     {
+        public string Name { get; set; }
         private IList<SubscriptionItem> _items;
 
         public virtual ICollection<SubscriptionItem> SubscriptionItems{ get; set; }

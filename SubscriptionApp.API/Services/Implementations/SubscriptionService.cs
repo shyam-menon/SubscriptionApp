@@ -60,9 +60,13 @@ namespace SubscriptionApp.API.Services
             SubscriptionView subscriptionView;
 
             if (subscription != null)
-                subscriptionView = _mapper.Map<SubscriptionView>(subscription);
+            {
+                 subscriptionView = _mapper.Map<SubscriptionView>(subscription);
+                 subscriptionView.MapPseudoSkus(subscription);                 
+            }
+               
             else
-                subscriptionView = new SubscriptionView();
+                subscriptionView = null;
 
             response.Subscription = subscriptionView;
 
