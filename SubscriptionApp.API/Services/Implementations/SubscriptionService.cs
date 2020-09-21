@@ -29,14 +29,14 @@ namespace SubscriptionApp.API.Services
             _pseudoSkuRepository = pseudoSkuRepository;
             _mapper = mapper;
         }
-        public async Task<CreateSubscriptionResponse> CreateSubscription(CreateSubscriptionRequest basketRequest)
+        public async Task<CreateSubscriptionResponse> CreateSubscription(CreateSubscriptionRequest subscriptionRequest)
         {
             CreateSubscriptionResponse response = new CreateSubscriptionResponse();
 
             Subscription subscription = new Subscription();
             
 
-            AddPseudoSkusToSubscription(basketRequest.PseudoSkusToAdd, subscription);
+            AddPseudoSkusToSubscription(subscriptionRequest.PseudoSkusToAdd, subscription);
 
             ThrowExceptionIfSubscriptionIsInvalid(subscription);
 
