@@ -11,11 +11,11 @@ namespace SubscriptionApp.API.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class PseudoSkuController : ControllerBase
+    public class PseudoSkusController : ControllerBase
     {
         private readonly IPseudoSkuCatalogService _pseudoSkuCatalogService;
         private readonly IMapper _mapper;
-        public PseudoSkuController(IPseudoSkuCatalogService pseudoSkuCatalogService, IMapper mapper)
+        public PseudoSkusController(IPseudoSkuCatalogService pseudoSkuCatalogService, IMapper mapper)
         {
             _mapper = mapper;
             _pseudoSkuCatalogService = pseudoSkuCatalogService;

@@ -5,7 +5,7 @@ using SubscriptionApp.API.Models;
 
 namespace SubscriptionApp.API.Data
 {
-    public class CommonRepository : ICommonRepository
+    public class CommonRepository : IGenericRepository, IUserRepository
     {
         private readonly DataContext _context;
         public CommonRepository(DataContext context)

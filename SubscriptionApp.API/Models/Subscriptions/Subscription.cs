@@ -60,7 +60,7 @@ namespace SubscriptionApp.API.Models.Subscriptions
             }
         }
 
-        public void ChangeQtyOfProduct(int qty, PseudoSku pseudoSku)
+        public void ChangeQtyOfPseudoSku(int qty, PseudoSku pseudoSku)
         {
             if (SubscriptionContainsAnItemFor(pseudoSku))
             {

@@ -18,6 +18,7 @@ using SubscriptionApp.API.Helpers;
 using SubscriptionApp.API.Infrastructure.UnitOfWork;
 using SubscriptionApp.API.Models.Categories;
 using SubscriptionApp.API.Models.PseudoSkus;
+using SubscriptionApp.API.Models.Subscriptions;
 using SubscriptionApp.API.Services;
 using SubscriptionApp.API.Services.Implementations;
 using SubscriptionApp.API.Services.Interfaces.PseudoSkuCatalogService;
@@ -76,15 +77,18 @@ namespace SubscriptionApp.API
             services.AddScoped<IAuthRepository, AuthRepository>();            
             
             //Add the repositories
-            services.AddScoped<ICommonRepository, CommonRepository>();
+            services.AddScoped<IGenericRepository, CommonRepository>();
+            services.AddScoped<IUserRepository, CommonRepository>();
             services.AddScoped<IPseudoSkuTitleRepository,PseudoSkuTitleRepository>();
             services.AddScoped<IPseudoSkuRepository,PseudoSkuRepository>();
             services.AddScoped<ICategoryRepository,CategoryRepository>();
+            services.AddScoped<ISubscriptionRepository,SubscriptionRepository>();
 
 
             //Add the services
             services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.AddScoped<IPseudoSkuCatalogService, PseudoSkuCatalogService>();
+            services.AddScoped<ISubscriptionService, SubscriptionService> ();
 
             //Unit of work
             services.AddScoped<IUnitOfWork, UnitOfWork>();
