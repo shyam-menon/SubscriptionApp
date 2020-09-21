@@ -17,6 +17,8 @@ namespace SubscriptionApp.API.Models.PseudoSkus
             get { return Title.Name; }
         }
 
+        public int Quantity { get; set; }
+
         public Decimal Price
         {
             get { return Title.Price; }

@@ -1,6 +1,6 @@
 using SubscriptionApp.API.Models.Subscriptions;
 
-namespace SubscriptionApp.API.Services
+namespace SubscriptionApp.API.Services.Interfaces.SubscriptionService
 {
     public interface ISubscriptionService
     {

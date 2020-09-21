@@ -156,10 +156,7 @@ namespace SubscriptionApp.API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(nullable: true),
-                    DateSubscribed = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    SubscriptionPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -169,7 +166,7 @@ namespace SubscriptionApp.API.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,17 +176,11 @@ namespace SubscriptionApp.API.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TitleId = table.Column<int>(nullable: true),
-                    SubscriptionId = table.Column<int>(nullable: true)
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PseudoSkus", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PseudoSkus_Subscriptions_SubscriptionId",
-                        column: x => x.SubscriptionId,
-                        principalTable: "Subscriptions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PseudoSkus_PseudoSkuTitles_TitleId",
                         column: x => x.TitleId,
@@ -198,10 +189,31 @@ namespace SubscriptionApp.API.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_PseudoSkus_SubscriptionId",
-                table: "PseudoSkus",
-                column: "SubscriptionId");
+            migrationBuilder.CreateTable(
+                name: "SubscriptionItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PseudoSkuId = table.Column<int>(nullable: true),
+                    SubscriptionId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubscriptionItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubscriptionItems_PseudoSkus_PseudoSkuId",
+                        column: x => x.PseudoSkuId,
+                        principalTable: "PseudoSkus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SubscriptionItems_Subscriptions_SubscriptionId",
+                        column: x => x.SubscriptionId,
+                        principalTable: "Subscriptions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PseudoSkus_TitleId",
@@ -234,6 +246,16 @@ namespace SubscriptionApp.API.Migrations
                 column: "SizeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SubscriptionItems_PseudoSkuId",
+                table: "SubscriptionItems",
+                column: "PseudoSkuId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubscriptionItems_SubscriptionId",
+                table: "SubscriptionItems",
+                column: "SubscriptionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Subscriptions_UserId",
                 table: "Subscriptions",
                 column: "UserId");
@@ -242,10 +264,13 @@ namespace SubscriptionApp.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PseudoSkus");
+                name: "SubscriptionItems");
 
             migrationBuilder.DropTable(
                 name: "Values");
+
+            migrationBuilder.DropTable(
+                name: "PseudoSkus");
 
             migrationBuilder.DropTable(
                 name: "Subscriptions");

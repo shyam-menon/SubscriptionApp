@@ -21,6 +21,7 @@ using SubscriptionApp.API.Models.PseudoSkus;
 using SubscriptionApp.API.Services;
 using SubscriptionApp.API.Services.Implementations;
 using SubscriptionApp.API.Services.Interfaces.PseudoSkuCatalogService;
+using SubscriptionApp.API.Services.Interfaces.SubscriptionService;
 
 namespace SubscriptionApp.API
 {

@@ -10,7 +10,7 @@ using SubscriptionApp.API.Data;
 namespace SubscriptionApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200919034048_InitialCreate")]
+    [Migration("20200921020303_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,15 +43,13 @@ namespace SubscriptionApp.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("SubscriptionId")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<int?>("TitleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SubscriptionId");
 
                     b.HasIndex("TitleId");
 
@@ -168,16 +166,7 @@ namespace SubscriptionApp.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateSubscribed")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("SubscriptionPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -185,6 +174,28 @@ namespace SubscriptionApp.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Subscriptions");
+                });
+
+            modelBuilder.Entity("SubscriptionApp.API.Models.Subscriptions.SubscriptionItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("PseudoSkuId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SubscriptionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PseudoSkuId");
+
+                    b.HasIndex("SubscriptionId");
+
+                    b.ToTable("SubscriptionItems");
                 });
 
             modelBuilder.Entity("SubscriptionApp.API.Models.User", b =>
@@ -228,10 +239,6 @@ namespace SubscriptionApp.API.Migrations
 
             modelBuilder.Entity("SubscriptionApp.API.Models.PseudoSkus.PseudoSku", b =>
                 {
-                    b.HasOne("SubscriptionApp.API.Models.Subscriptions.Subscription", null)
-                        .WithMany("PseudoSkus")
-                        .HasForeignKey("SubscriptionId");
-
                     b.HasOne("SubscriptionApp.API.Models.PseudoSkus.PseudoSkuTitle", "Title")
                         .WithMany("PseudoSkus")
                         .HasForeignKey("TitleId");
@@ -262,11 +269,20 @@ namespace SubscriptionApp.API.Migrations
 
             modelBuilder.Entity("SubscriptionApp.API.Models.Subscriptions.Subscription", b =>
                 {
-                    b.HasOne("SubscriptionApp.API.Models.User", "User")
+                    b.HasOne("SubscriptionApp.API.Models.User", null)
                         .WithMany("Subscriptions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("SubscriptionApp.API.Models.Subscriptions.SubscriptionItem", b =>
+                {
+                    b.HasOne("SubscriptionApp.API.Models.PseudoSkus.PseudoSku", "PseudoSku")
+                        .WithMany()
+                        .HasForeignKey("PseudoSkuId");
+
+                    b.HasOne("SubscriptionApp.API.Models.Subscriptions.Subscription", null)
+                        .WithMany("SubscriptionItems")
+                        .HasForeignKey("SubscriptionId");
                 });
 #pragma warning restore 612, 618
         }

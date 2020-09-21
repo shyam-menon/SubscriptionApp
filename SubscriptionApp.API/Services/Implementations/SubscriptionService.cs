@@ -1,6 +1,7 @@
 using SubscriptionApp.API.Helpers;
 using SubscriptionApp.API.Models;
 using SubscriptionApp.API.Models.Subscriptions;
+using SubscriptionApp.API.Services.Interfaces.SubscriptionService;
 
 namespace SubscriptionApp.API.Services
 {
@@ -8,7 +9,7 @@ namespace SubscriptionApp.API.Services
     {
         public decimal CalculateSubscriptionPrice(Subscription subscription)
         {
-            return subscription.SubscriptionPrice;
+            throw new System.NotImplementedException();
         }
     }
 }

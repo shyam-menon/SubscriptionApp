@@ -2,14 +2,10 @@ using System.Linq;
 
 namespace SubscriptionApp.API.Infrastructure.Domain
 {
-    public interface IRepository<T>
+    public interface IRepository<T, TId> : IReadOnlyRepository<T, TId> where T : IAggregateRoot
     {
-         IQueryable<T> Findall();
-
-         T FindBy(int Id);
-
-         void Add(T entity);
-         void Save(T entity);
-         void Remove(T entity);
+        void Save(T entity);
+        void Add(T entity);
+        void Remove(T entity);
     }
 }

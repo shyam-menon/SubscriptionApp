@@ -16,15 +16,15 @@ namespace SubscriptionApp.API.Services.Implementations
     public class PseudoSkuCatalogService : IPseudoSkuCatalogService
     {
         private readonly IPseudoSkuTitleRepository _pseudoSkuTitleRepository;
-        private readonly IPseudoSkuRepository _pseudoRepository;
+        private readonly IPseudoSkuRepository _pseudoSkuRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
 
         public PseudoSkuCatalogService(IPseudoSkuTitleRepository pseudoSkuTitleRepository,
-                                       IPseudoSkuRepository pseudoRepository,
+                                       IPseudoSkuRepository pseudoSkuRepository,
                                        ICategoryRepository categoryRepository, IMapper mapper)
         {
-            _pseudoRepository = pseudoRepository;
+            _pseudoSkuRepository = pseudoSkuRepository;
             _categoryRepository = categoryRepository;            
             _pseudoSkuTitleRepository = pseudoSkuTitleRepository;
             _mapper = mapper;
@@ -38,6 +38,7 @@ namespace SubscriptionApp.API.Services.Implementations
             return response;
         }
 
+        //Returns all the pseudo SKUs
         public async Task<GetAllPseudoSkusResponse> GetAllPseudoSkus()
         {
              GetAllPseudoSkusResponse response = new GetAllPseudoSkusResponse();
@@ -57,6 +58,7 @@ namespace SubscriptionApp.API.Services.Implementations
             return response;
         }
 
+        //Returns a particular pseudo SKU
         public GetPseudoSkuResponse GetPseudoSku(GetPseudoSkuRequest request)
         {
              GetPseudoSkuResponse response = new GetPseudoSkuResponse();
@@ -68,6 +70,7 @@ namespace SubscriptionApp.API.Services.Implementations
             return response;
         }
 
+        //Gives all pseudo for a category e.g. print, solution etc
         public GetPseudoSkusByCategoryResponse GetPseudoSkusByCategory(GetPseudoSkusByCategoryRequest request)
         {
             GetPseudoSkusByCategoryResponse response;
@@ -85,9 +88,10 @@ namespace SubscriptionApp.API.Services.Implementations
             return response;
         }
 
+        //Gives pseudo SKUs that match a criterion of category, color, function and size        
          private IEnumerable<PseudoSku> GetAllPseudoSkusMatchingQueryAndSort(GetPseudoSkusByCategoryRequest request, Query pseudoSkuQuery)
         {
-            IEnumerable<PseudoSku> pseudoSkusMatchingRefinement = _pseudoRepository.FindBy(pseudoSkuQuery);
+            IEnumerable<PseudoSku> pseudoSkusMatchingRefinement = _pseudoSkuRepository.FindBy(pseudoSkuQuery);
 
             switch (request.SortBy)
             {

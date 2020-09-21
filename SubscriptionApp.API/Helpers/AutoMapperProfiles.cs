@@ -30,6 +30,10 @@ namespace SubscriptionApp.API.Helpers
             // Category
             CreateMap<Category, CategoryView>();
 
+            //Subscription
+            CreateMap<SubscriptionItem, SubscriptionItemView>();
+            CreateMap<Subscription, SubscriptionView>();
+
             // IProductAttribute
             CreateMap<IPseudoSkuAttribute, Refinement>();           
         }        
