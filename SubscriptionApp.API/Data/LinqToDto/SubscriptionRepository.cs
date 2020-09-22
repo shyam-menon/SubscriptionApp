@@ -1,34 +1,46 @@
 using System.Threading.Tasks;
+using SubscriptionApp.API.Infrastructure.Domain;
 using SubscriptionApp.API.Infrastructure.UnitOfWork;
 using SubscriptionApp.API.Models.Subscriptions;
 
 namespace SubscriptionApp.API.Data.LinqToDto
 {
-    public class SubscriptionLToDRepository: RepositoryLToD<Subscription, int>, ISubscriptionRepository
+    public class SubscriptionLToDRepository: IUnitOfWorkRepository, ISubscriptionLToDRepository
     {
-        public SubscriptionLToDRepository(IUnitOfWork uow)
-            : base(uow)
+        private IUnitOfWork _uow;
+        public SubscriptionLToDRepository(IUnitOfWork uow)            
         {
+            _uow = uow;
         }
 
-        public void Add<T>(T entity) where T : class
+        public void Add(Subscription subscription)
         {
-            throw new System.NotImplementedException();
+            _uow.RegisterNew(subscription, this);
         }
 
-        public void Delete<T>(T entity) where T : class
+        public void PersistCreationOf(IAggregateRoot entity)
         {
-            throw new System.NotImplementedException();
+            //ADO.NET code to add the entity
         }
 
-        public Task<bool> SaveAll()
+        public void PersistDeletionOf(IAggregateRoot entity)
         {
-            throw new System.NotImplementedException();
+            //ADO.NET code to delete the entity
         }
 
-        Task<Subscription> ISubscriptionRepository.FindBy(int id)
+        public void PersistUpdateOf(IAggregateRoot entity)
         {
-            throw new System.NotImplementedException();
+            //ADO.NET code to update the entity
+        }
+
+        public void Remove(Subscription subscription)
+        {
+            _uow.RegisterRemoved(subscription, this);
+        }
+
+        public void Save(Subscription subscription)
+        {
+            _uow.RegisterAmended(subscription, this);
         }
     }
 }

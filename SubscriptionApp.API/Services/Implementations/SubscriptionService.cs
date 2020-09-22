@@ -42,7 +42,9 @@ namespace SubscriptionApp.API.Services
 
             _subscriptionRepository.Add<Subscription>(subscription);
 
-             //When not using the EF repository, commnit using unit of work
+             //When not using the EF repository use the ISubscriptionLToDRepository
+             //_subscriptionRepository.Add(subscription);
+             // commit using unit of work
             //_uow.Commit();
 
             await _subscriptionRepository.SaveAll();
