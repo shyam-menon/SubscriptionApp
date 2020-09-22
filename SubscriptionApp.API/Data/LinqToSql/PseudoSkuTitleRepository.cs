@@ -15,9 +15,10 @@ namespace SubscriptionApp.API.Data.LinqToSql
         {
         }
 
-        public async Task<IEnumerable<PseudoSkuTitle>> FindByAsync(Query query, int index, int count)
+        public new async Task<IEnumerable<PseudoSkuTitle>> FindByAsync(Query query, int index, int count)
         {
-           return GenerateDummyPseudoSkus();
+            var dummyTask = Task.Run( () => GenerateDummyPseudoSkus());
+            return await dummyTask;
         }
 
         private List<PseudoSkuTitle> GenerateDummyPseudoSkus()

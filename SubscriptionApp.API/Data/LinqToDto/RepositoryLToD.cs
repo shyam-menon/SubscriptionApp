@@ -36,7 +36,7 @@ namespace SubscriptionApp.API.Data.LinqToDto
              throw new NotImplementedException();
         }
 
-        public async Task<T> FindByAsync(TEntityKey id)
+        public Task<T> FindByAsync(TEntityKey id)
         {
              throw new NotImplementedException();
         }
@@ -46,7 +46,7 @@ namespace SubscriptionApp.API.Data.LinqToDto
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<T>> FindAllAsync()
+        public Task<IEnumerable<T>> FindAllAsync()
         {
             throw new NotImplementedException();
         }
@@ -56,7 +56,7 @@ namespace SubscriptionApp.API.Data.LinqToDto
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<T>> FindAllAsync(int index, int count)
+        public Task<IEnumerable<T>> FindAllAsync(int index, int count)
         {
             throw new NotImplementedException();
         }
@@ -66,7 +66,7 @@ namespace SubscriptionApp.API.Data.LinqToDto
              throw new NotImplementedException();
         }
 
-         public async Task<IEnumerable<T>> FindByAsync(Query query)
+         public Task<IEnumerable<T>> FindByAsync(Query query)
         {
              throw new NotImplementedException();
         }        
@@ -76,7 +76,7 @@ namespace SubscriptionApp.API.Data.LinqToDto
              throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<T>> FindByAsync(Query query, int index, int count)
+        public Task<IEnumerable<T>> FindByAsync(Query query, int index, int count)
         {
              throw new NotImplementedException();
         }             
