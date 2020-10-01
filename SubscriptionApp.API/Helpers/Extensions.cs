@@ -12,6 +12,13 @@ namespace SubscriptionApp.API.Helpers
             response.Headers.Add("Access-Control-Allow-Origin", "*");
         }
        
-        
+        public static decimal AchieveMargin(this decimal val, decimal marginPercentage)
+        {
+            //In case the margin specified is more than 100 then reduce it to less than 100
+            if (marginPercentage >= 100)
+                marginPercentage = 99.99m;
+
+            return (val / ((100 - marginPercentage) / 100));
+        }
     }
 }
